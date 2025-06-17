@@ -21,16 +21,11 @@ BEGIN {
 '
 
 awk -v N="$N" '
-function indent(n) {
-  for (k = 1; k <= n; ++k) printf(" ");
-}
-
 BEGIN {
   for (i = 1; i <= N; ++i) {
     printf("#define WISE_ENUM_IMPL_LOOP_%d(M, C, D, x", i);
     if (i > 1) printf(", ...");
     printf(") \\\n");
-    indent(2);
     printf("M(C, x)");
     if (i > 1) {
       printf(" D() WISE_ENUM_IMPL_EXPAND(WISE_ENUM_IMPL_LOOP_%d(M, C, D, __VA_ARGS__))", i - 1);
